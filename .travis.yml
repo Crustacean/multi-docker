@@ -19,3 +19,5 @@ after_success:
  - docker push em22435/complexNginx
  - docker push em22435/complexServer
  - docker push em22435/complexWorker
+ 
+ 
