@@ -8,14 +8,14 @@ script:
  - docker run -e CI=true em22435/react-test npm run test
 
 after_success:
- - docker build -t em22435/complexClient ./client
- - docker build -t em22435/complexNginx ./nginx
- - docker build -t em22435/complexServer ./server
- - docker build -t em22435/complexWorker ./worker
+ - docker build -t em22435/client ./client
+ - docker build -t em22435/nginx ./nginx
+ - docker build -t em22435/server ./server
+ - docker build -t em22435/worker ./worker
  
  - echo "$dockerPwD" | docker login -u "$dockerID" --password-stdin
  
- - docker push em22435/complexClient
- - docker push em22435/complexNginx
- - docker push em22435/complexServer
- - docker push em22435/complexWorker
+ - docker push em22435/client
+ - docker push em22435/nginx
+ - docker push em22435/server
+ - docker push em22435/worker
