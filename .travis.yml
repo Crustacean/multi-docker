@@ -1,0 +1,21 @@
+---
+sudo: required
+services:
+ - docker
+before_install:
+ - docker build -t multi/react -f ./client/Dockerfile.dev ./client
+script:
+ - docker run -e CI=true multi/react npm run test
+
+after_success:
+ - docker build -t em22435/complexClient ./client
+ - docker build -t em22435/complexNginx ./nginx
+ - docker build -t em22435/complexServer ./server
+ - docker build -t em22435/complexWorker ./worker
+ 
+ - echo "$dockerPwD" | docker login -u "$dockerID" --password-stdin
+ 
+ - docker push em22435/complexClient
+ - docker push em22435/complexNginx
+ - docker push em22435/complexServer
+ - docker push em22435/complexWorker
