@@ -1,18 +1,6 @@
 FROM node:alpine as builder
-
-#ENV http_proxy "http://proxy2:8080"
-#ENV https_proxy "http://proxy2:8080"
-
-#RUN npm config set http_proxy "http://proxy2:8080"
-#RUN npm config set https_proxy "http://proxy2:8080"
-
-#RUN npm config get http_proxy
-#RUN npm config get https-proxy
-
-
 WORKDIR '/app'
 COPY ./package.json ./
-
 RUN npm cache clean --force
 RUN npm install
 COPY . .
