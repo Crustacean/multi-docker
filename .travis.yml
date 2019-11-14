@@ -8,14 +8,30 @@ script:
  - docker run -e CI=true em22435/react-test npm run test
 
 after_success:
- - docker build -t em22435/multi-client:0.1 ./client
- - docker build -t em22435/nginx ./nginx
+
  - docker build -t em22435/server ./server
  - docker build -t em22435/worker ./worker
+ - docker build -t em22435/public ./client
+ - docker build -t em22435/nginx ./nginx
  
  - echo "$dockerPwD" | docker login -u "$dockerID" --password-stdin
- 
- - docker push em22435/multi-client:0.1
- - docker push em22435/nginx
+  
  - docker push em22435/server
  - docker push em22435/worker
+ - docker push em22435/public
+ - docker push em22435/nginx
+ 
+deploy:
+ provider: elasticbeanstalk
+ region: us-west-2
+ app: multi-docker
+ env: MultiDocker-env
+ bucket_name: elasticbeanstalk-us-west-2-627025560524
+ bucket_path: multi-docker
+ on:
+  branch: master
+ access_key_id: $AWS_ACCESS_KEY
+ secret_access_key: $AWS_SECRET_KEY
+ 
+after_deploy:
+ - echo "Done deploying"
