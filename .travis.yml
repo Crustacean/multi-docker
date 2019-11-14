@@ -11,14 +11,14 @@ after_success:
 
  - docker build -t em22435/server ./server
  - docker build -t em22435/worker ./worker
- - docker build -t em22435/public ./client
+ - docker build -t em22435/client ./client
  - docker build -t em22435/nginx ./nginx
  
  - echo "$dockerPwD" | docker login -u "$dockerID" --password-stdin
   
  - docker push em22435/server
  - docker push em22435/worker
- - docker push em22435/public
+ - docker push em22435/client
  - docker push em22435/nginx
  
 deploy:
